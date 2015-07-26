@@ -690,4 +690,40 @@ public class JsonParser {
 
         return gson.fromJson(element, elementType);
     }
-} 
+
+    /**
+     * Convert json string to AppFormFieldsDto.
+     * 
+     * @param json
+     *            a json string
+     * @return appFormFields object
+     * @throws IOException
+     */
+    public AppFormFieldsDto jsonToAppFormFields(String json) throws IOException {
+        com.google.gson.JsonParser parser = new com.google.gson.JsonParser();
+        JsonElement element = parser.parse(json);
+        Type elementType = new TypeToken<AppFormFieldsDto>() {
+        }.getType();
+        Gson gson = new Gson();
+
+        return gson.fromJson(element, elementType);
+    }
+
+    /**
+     * Convert json string to AppFormLayoutDto.
+     * 
+     * @param json
+     *            a json string
+     * @return appFormLayout object
+     * @throws IOException
+     */
+    public AppFormLayoutDto jsonToAppFormLayout(String json) throws IOException {
+        com.google.gson.JsonParser parser = new com.google.gson.JsonParser();
+        JsonElement element = parser.parse(json);
+        Type elementType = new TypeToken<AppFormLayoutDto>() {
+        }.getType();
+        Gson gson = new Gson();
+
+        return gson.fromJson(element, elementType);
+    }
+}

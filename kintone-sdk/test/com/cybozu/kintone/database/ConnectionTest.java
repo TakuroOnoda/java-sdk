@@ -15,6 +15,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.cybozu.kintone.database.exception.DBException;
+import com.google.gson.Gson;
 
 public class ConnectionTest {
 
@@ -704,9 +705,32 @@ public class ConnectionTest {
         long appId = getAppId();
         Connection db = getConnection();
         try {
-            AppCustomizeDto app = db.getAppCustomize(appId);
-            System.out.println(app.getDesktop());
-            System.out.println(app.getMobile());
+            AppCustomizeDto dto = db.getAppCustomize(appId);
+            System.out.println(new Gson().toJson(dto));
+        } catch (Exception e) {
+            fail("db exception:" + e.getMessage());
+        }
+    }
+
+    @Test
+    public void testGetAppFormFields() {
+        long appId = getAppId();
+        Connection db = getConnection();
+        try {
+            AppFormFieldsDto dto = db.getAppFormFields(appId);
+            System.out.println(new Gson().toJson(dto));
+        } catch (Exception e) {
+            fail("db exception:" + e.getMessage());
+        }
+    }
+
+    @Test
+    public void testGetAppFormLayout() {
+        long appId = getAppId();
+        Connection db = getConnection();
+        try {
+            AppFormLayoutDto dto = db.getAppFormLayout(appId);
+            System.out.println(new Gson().toJson(dto));
         } catch (Exception e) {
             fail("db exception:" + e.getMessage());
         }
