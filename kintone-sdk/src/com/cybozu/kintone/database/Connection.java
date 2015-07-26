@@ -1271,10 +1271,79 @@ public class Connection {
         try {
             appCustomize = parser.jsonToAppCustomize(response);
         } catch (IOException e) {
-            throw new ParseException("failed to parse json to app");
+            throw new ParseException("failed to parse json to appCustomize");
         }
 
         return appCustomize;
     }
 
+    /**
+     * Return the appFormFields information object
+     * 
+     * @param id
+     *            app id
+     * @return appFormFields object
+     */
+    public AppFormFieldsDto getAppFormFields(long id) throws DBException {
+        return getAppFormFields(id, null);
+    }
+
+    /**
+     * Return the appFormFields information object
+     * 
+     * @param id
+     *            app id
+     * @param lang
+     *            language
+     * @return appFormFields object
+     */
+    public AppFormFieldsDto getAppFormFields(long id, String lang)
+            throws DBException {
+        StringBuilder sb = new StringBuilder();
+        sb.append("app=");
+        sb.append(id);
+        if (null != lang) {
+            sb.append("&lang=");
+            sb.append(lang);
+        }
+
+        String query = new String(sb);
+        String response = request("GET", "app/form/fields.json?" + query, null);
+        JsonParser parser = new JsonParser();
+        AppFormFieldsDto appFormFields = null;
+
+        try {
+            appFormFields = parser.jsonToAppFormFields(response);
+        } catch (IOException e) {
+            throw new ParseException("failed to parse json to appFormFields");
+        }
+
+        return appFormFields;
+    }
+
+    /**
+     * Return the appFormLayout information object
+     * 
+     * @param id
+     *            app id
+     * @return appFormLayout object
+     */
+    public AppFormLayoutDto getAppFormLayout(long id) throws DBException {
+        StringBuilder sb = new StringBuilder();
+        sb.append("app=");
+        sb.append(id);
+
+        String query = new String(sb);
+        String response = request("GET", "app/form/layout.json?" + query, null);
+        JsonParser parser = new JsonParser();
+        AppFormLayoutDto appFormLayout = null;
+
+        try {
+            appFormLayout = parser.jsonToAppFormLayout(response);
+        } catch (IOException e) {
+            throw new ParseException("failed to parse json to appFormLayout");
+        }
+
+        return appFormLayout;
+    }
 }
