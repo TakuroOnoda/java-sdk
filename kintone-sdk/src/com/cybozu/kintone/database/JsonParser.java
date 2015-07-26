@@ -672,4 +672,22 @@ public class JsonParser {
 
         return gson.fromJson(apps, collectionType);
     }
+
+    /**
+     * Convert json string to AppCustomizeDto.
+     * 
+     * @param json
+     *            a json string
+     * @return appCustomize object
+     * @throws IOException
+     */
+    public AppCustomizeDto jsonToAppCustomize(String json) throws IOException {
+        com.google.gson.JsonParser parser = new com.google.gson.JsonParser();
+        JsonElement element = parser.parse(json);
+        Type elementType = new TypeToken<AppCustomizeDto>() {
+        }.getType();
+        Gson gson = new Gson();
+
+        return gson.fromJson(element, elementType);
+    }
 } 

@@ -1,6 +1,8 @@
 package com.cybozu.kintone.database;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.io.File;
 import java.text.DateFormat;
@@ -149,7 +151,7 @@ public class ConnectionTest {
             records.add(record);
             db.insert(app, records);
             
-            String[] columns = {"ï∂éöóÒ__1çs_"};
+            String[] columns = { "ï∂éöóÒ__1çs_" };
             ResultSet rs = db.select(app, "ï∂éöóÒ__1çs_ = \"ÇŸÇ∞\"", columns);
             if (rs.size() != 3) {
                 fail("invalid count " + rs.size());
@@ -693,6 +695,19 @@ public class ConnectionTest {
             assertEquals(rs.getLong("Number"), new Long(3));
             
         } catch(Exception e) {
+            fail("db exception:" + e.getMessage());
+        }
+    }
+
+    @Test
+    public void testGetAppCustomize() {
+        long appId = getAppId();
+        Connection db = getConnection();
+        try {
+            AppCustomizeDto app = db.getAppCustomize(appId);
+            System.out.println(app.getDesktop());
+            System.out.println(app.getMobile());
+        } catch (Exception e) {
             fail("db exception:" + e.getMessage());
         }
     }

@@ -1250,4 +1250,31 @@ public class Connection {
         
     	return apps;
     }
+
+    /**
+     * Return the appCustomize information object
+     * 
+     * @param id
+     *            app id
+     * @return appCustomize object
+     */
+    public AppCustomizeDto getAppCustomize(long id) throws DBException {
+        StringBuilder sb = new StringBuilder();
+        sb.append("app=");
+        sb.append(id);
+
+        String query = new String(sb);
+        String response = request("GET", "app/customize.json?" + query, null);
+        JsonParser parser = new JsonParser();
+        AppCustomizeDto appCustomize = null;
+
+        try {
+            appCustomize = parser.jsonToAppCustomize(response);
+        } catch (IOException e) {
+            throw new ParseException("failed to parse json to app");
+        }
+
+        return appCustomize;
+    }
+
 }
